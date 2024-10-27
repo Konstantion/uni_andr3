@@ -1,7 +1,10 @@
+import com.android.utils.TraceUtils.simpleId
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    id(libs.plugins.kotlin.kapt.get().pluginId)
 }
 
 android {
@@ -27,19 +30,31 @@ android {
             )
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
+
     kotlinOptions {
         jvmTarget = "1.8"
     }
+
     buildFeatures {
         compose = true
+    }
+
+    kapt {
+        correctErrorTypes = true
     }
 }
 
 dependencies {
+    val roomVersion = "2.5.2"
+    implementation("androidx.room:room-runtime:$roomVersion")
+    kapt("androidx.room:room-compiler:$roomVersion")
+    implementation("androidx.room:room-ktx:$roomVersion")
+
     implementation("androidx.recyclerview:recyclerview:1.3.1")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation(libs.androidx.core.ktx)

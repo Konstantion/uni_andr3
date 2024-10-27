@@ -6,8 +6,13 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class ReadableViewAdapter(private val data: List<Readable>) :
+class ReadableViewAdapter(private var data: List<Readable>) :
     RecyclerView.Adapter<ReadableViewHolder>() {
+
+    fun updateData(newData: List<Readable>) {
+        data = newData
+        notifyDataSetChanged()
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ReadableViewHolder {
         return when (viewType) {
